@@ -1,0 +1,35 @@
+{
+	"window":
+	{
+		"resizable": false,
+		"scale": 0.6,
+		"title": "Editor",
+		"undecorated": false,
+	},
+
+	"dialog":
+	{
+		"resizable": false,
+		"scale": 0.4,
+		"title": "Editor",
+		"undecorated": false,
+
+		"question_textfield_x": 0.1,
+		"question_textfield_y": 0.1,
+		"question_textfield_width": 0.8,
+		"question_textfield_height": 0.05,
+
+		"answers_textfield_x": 0.1,
+		"answers_textfield_y": 0.3,
+		"answers_textfield_dx": 0.5,
+		"answers_textfield_dy": 0.2,
+		"answers_textfield_width": 0.3,
+		"answers_textfield_height": 0.05,
+
+		"values_textfield_x": 0.15,
+		"values_textfield_y": 0.7,
+		"values_textfield_dx": 0.4,
+		"values_textfield_width": 0.3,
+		"values_textfield_height": 0.05,
+	},
+}
