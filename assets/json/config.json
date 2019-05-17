@@ -1,8 +1,8 @@
 {
 	"window":
 	{
-		"resizable": false,
-		"scale": 0.6,
+		"resizable": true,
+		"scale": 0.8,
 		"title": "Editor",
 		"undecorated": false,
 	},

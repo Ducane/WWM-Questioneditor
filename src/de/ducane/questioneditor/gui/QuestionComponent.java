@@ -21,6 +21,7 @@ public class QuestionComponent extends JPanel {
   
   private JTextField[] answers;
   private JTextField question;
+  private JTextField url;
   private JFormattedTextField correctAnswer;
   private JFormattedTextField difficulty;
   
@@ -112,16 +113,6 @@ public class QuestionComponent extends JPanel {
   
   public String getQuestion() {
     String question = this.question.getText();
-    
-    for ( int i = 0; i < question.length(); i++ ) {
-      final char c = question.charAt( i );
-      
-      if ( c > 127 ) {
-        question = question.replace( String.valueOf( c ),
-            "\\u" + Integer.toHexString( c | 0x10000 ).substring( 1 ) );
-      }
-    }
-    
     return question;
   }
   
@@ -133,23 +124,20 @@ public class QuestionComponent extends JPanel {
     return Integer.parseInt( difficulty.getText() );
   }
   
+  public String getURL() {
+    return url.getText();
+  }
+  
+  public JTextField getURLField(){
+    return url;
+  }
+  
   public String[] getAnswers() {
     final String[] answers = new String[ this.answers.length ];
     
     for ( int i = 0; i < answers.length; i++ ) {
       final JTextField field = this.answers[ i ];
       answers[ i ] = field.getText();
-      
-      final String answer = answers[ i ];
-      
-      for ( int j = 0; j < answer.length(); j++ ) {
-        final char c = answer.charAt( j );
-        
-        if ( c > 127 ) {
-          answers[ i ] = answers[ i ].replace( String.valueOf( c ),
-              "\\u" + Integer.toHexString( c | 0x10000 ).substring( 1 ) );
-        }
-      }
     }
     
     return answers;
@@ -183,14 +171,14 @@ public class QuestionComponent extends JPanel {
     
     for ( int i = 0; i < answers.length; i++ ) {
       answers[ i ] = new JTextField();
-      answers[ i ].setFont( new Font( "Arial", 0, (int) ( collapsedHeight * 0.25f ) ) );
+      answers[ i ].setFont( new Font( "Arial", 0, (int) ( downHeight * 0.075f ) ) );
       
       final int answersWidth = (int) ( gui.getWidth() * 0.2f );
-      final int answersHeight = (int) ( downHeight * 0.2f );
+      final int answersHeight = (int) ( downHeight * 0.14f );
       final int answersX = (int) ( gui.getWidth() * 0.1f
           + i % 2 * ( answersWidth + 0.1f * gui.getWidth() ) );
-      final int answersY = (int) ( collapsedHeight + downHeight * 0.2f
-          + i / 2 * ( answersHeight + 0.2f * downHeight ) );
+      final int answersY = (int) ( collapsedHeight + downHeight * 0.14f
+          + i / 2 * ( answersHeight + 0.14f * downHeight ) );
       
       answers[ i ].setBounds( answersX, answersY, answersWidth, answersHeight );
       add( answers[ i ] );
@@ -217,12 +205,12 @@ public class QuestionComponent extends JPanel {
     mfCorrectAnswer.setValidCharacters( "ABCD" );
     
     correctAnswer = new JFormattedTextField( mfCorrectAnswer );
-    correctAnswer.setFont( new Font( "Arial", 0, (int) ( collapsedHeight * 0.25f ) ) );
+    correctAnswer.setFont( new Font( "Arial", 0, (int) ( downHeight * 0.075f ) ) );
     
     final int correctAnswerWidth = (int) ( gui.getWidth() * 0.2f );
-    final int correctAnswerHeight = (int) ( downHeight * 0.2f );
+    final int correctAnswerHeight = (int) ( downHeight * 0.14f );
     final int correctAnswerX = (int) ( gui.getWidth() * 0.7f );
-    final int correctAnswerY = (int) ( collapsedHeight + downHeight * 0.2f );
+    final int correctAnswerY = (int) ( collapsedHeight + downHeight * 0.14f );
     
     correctAnswer.setBounds( correctAnswerX, correctAnswerY, correctAnswerWidth,
         correctAnswerHeight );
@@ -250,12 +238,12 @@ public class QuestionComponent extends JPanel {
     mfDifficulty.setValidCharacters( "1234" );
     
     difficulty = new JFormattedTextField( mfDifficulty );
-    difficulty.setFont( new Font( "Arial", 0, (int) ( collapsedHeight * 0.25f ) ) );
+    difficulty.setFont( new Font( "Arial", 0, (int) ( downHeight * 0.075f ) ) );
     
     final int difficultyWidth = (int) ( gui.getWidth() * 0.2f );
-    final int difficultyHeight = (int) ( downHeight * 0.2f );
+    final int difficultyHeight = (int) ( downHeight * 0.14f );
     final int difficultyX = (int) ( gui.getWidth() * 0.7f );
-    final int difficultyY = (int) ( collapsedHeight + downHeight * 0.6f );
+    final int difficultyY = (int) ( collapsedHeight + downHeight * 0.42f );
     
     difficulty.setBounds( difficultyX, difficultyY, difficultyWidth, difficultyHeight );
     
@@ -268,6 +256,26 @@ public class QuestionComponent extends JPanel {
     difficultyLabel.setBounds( difficultyX - fmDifficulty.stringWidth( difficultyLabel.getText() )
         - (int) ( 0.025f * gui.getWidth() ), difficultyY, difficultyWidth, difficultyHeight );
     add( difficultyLabel );
+    
+    url = new JTextField();
+    url.setFont( new Font( "Arial", 0, (int) ( downHeight * 0.075f ) ) );
+    
+    final int urlWidth = (int) ( gui.getWidth() * 0.2f );
+    final int urlHeight = (int) ( downHeight * 0.14f );
+    final int urlX = (int) ( ( gui.getWidth() - urlWidth ) / 2f );
+    final int urlY = (int) ( collapsedHeight + downHeight * 0.70f );
+    
+    url.setBounds( urlX, urlY, urlWidth, urlHeight );
+    
+    add( url );
+    
+    final JLabel urlLabel = new JLabel( "URL:" );
+    urlLabel
+        .setFont( new Font( "Arial", 0, (int) ( downHeight * 0.125f ) ) );
+    final FontMetrics fmImagePath = urlLabel.getFontMetrics( urlLabel.getFont() );
+    urlLabel.setBounds( urlX - fmImagePath.stringWidth( urlLabel.getText() )
+        - (int) ( 0.025f * gui.getWidth() ), urlY, urlWidth, urlHeight );
+    add( urlLabel );
   }
   
   @ Override
@@ -301,7 +309,7 @@ public class QuestionComponent extends JPanel {
     int height = (int) ( collapsedHeight * 0.2f );
     int width = (int) ( getWidth() * 0.0075f );
     final int x = (int) ( getWidth() * 0.01f );
-    final int y =  ( collapsedHeight - height ) / 2;
+    final int y = ( collapsedHeight - height ) / 2;
     
     triangle.moveTo( x, y );
     

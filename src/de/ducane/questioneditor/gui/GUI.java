@@ -220,6 +220,34 @@ public final class GUI extends JPanel {
     final char correctAnswer = comp.getCorrectAnswer();
     object.put( "correctAnswer", correctAnswer - 65 );
     object.put( "difficulty", comp.getDifficulty() );
+    object.put( "imageURL", comp.getURL() );
+    
+    // if ( !comp.getURL().equals( "" ) ) {
+    // URL url = null;
+    // try {
+    // url = new URL( comp.getURL() );
+    // } catch ( MalformedURLException e1 ) {
+    // e1.printStackTrace();
+    // }
+    //
+    // BufferedImage image = null;
+    // try {
+    // image = ImageIO.read( url );
+    // } catch ( IOException e ) {
+    // e.printStackTrace();
+    // }
+    //
+    // final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    //
+    // try {
+    // ImageIO.write( image, "png", outputStream );
+    // } catch ( final IOException ignore ) {
+    // }
+    //
+    // object.put( "image", Base64.getEncoder().encodeToString( outputStream.toByteArray() ) );
+    // } else {
+    // object.put( "image", "" );
+    // }
     return object;
   }
   
@@ -228,6 +256,7 @@ public final class GUI extends JPanel {
     final String[] answers = o.get( "answers" ).asStringArray();
     final int correctAnswer = o.get( "correctAnswer" ).asInt();
     final int difficulty = o.get( "difficulty" ).asInt();
+    final String imageUrl = o.get( "imageURL" ).asString();
     
     final QuestionComponent comp = new QuestionComponent( this );
     
@@ -241,6 +270,7 @@ public final class GUI extends JPanel {
     
     comp.getCorrectAnswerField().setText( String.valueOf( (char) ( correctAnswer + 65 ) ) );
     comp.getDifficultyField().setText( String.valueOf( difficulty ) );
+    comp.getURLField().setText( imageUrl );
     
     return comp;
   }
